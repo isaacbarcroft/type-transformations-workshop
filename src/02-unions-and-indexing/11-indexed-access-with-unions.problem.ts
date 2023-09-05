@@ -1,4 +1,7 @@
+import { Includes } from "ts-toolbelt/out/Object/Includes";
 import { Equal, Expect } from "../helpers/type-utils";
+import { Union } from "ts-toolbelt";
+import { UnionOf } from "ts-toolbelt/out/Object/UnionOf";
 
 export const programModeEnumMap = {
   GROUP: "group",
@@ -9,7 +12,12 @@ export const programModeEnumMap = {
   PLANNED_SELF_DIRECTED: "plannedSelfDirected",
 } as const;
 
-export type IndividualProgram = unknown;
+type Type = typeof programModeEnumMap;
+export type IndividualProgram = (typeof programModeEnumMap)[
+  | "ONE_ON_ONE"
+  | "PLANNED_ONE_ON_ONE"
+  | "SELF_DIRECTED"
+  | "PLANNED_SELF_DIRECTED"];
 
 type tests = [
   Expect<
@@ -17,5 +25,5 @@ type tests = [
       IndividualProgram,
       "1on1" | "selfDirected" | "planned1on1" | "plannedSelfDirected"
     >
-  >,
+  >
 ];
